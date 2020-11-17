@@ -3,6 +3,9 @@ package com.kakao.pay.moneyspread.models;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 뿌리기 API 요청 RequestBody 클래스
+ */
 @Getter @Setter
 public class SpreadSeed {
     /**

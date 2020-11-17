@@ -16,4 +16,3 @@ public class MoneySpreadController {
         return String.format("%d, %s", userId, roomId);
     }
 }
-
