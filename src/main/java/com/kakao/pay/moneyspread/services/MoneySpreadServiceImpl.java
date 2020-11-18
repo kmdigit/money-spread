@@ -6,12 +6,16 @@ import com.kakao.pay.moneyspread.repositories.SpreadRoomRepository;
 import com.kakao.pay.moneyspread.utils.TokenGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
 public class MoneySpreadServiceImpl implements MoneySpreadService {
     private final SpreadRoomRepository spreadRoomRepository;
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED)
     @Override
     public String createRoom(String roomId, long userId, SpreadSeed spreadSeed) {
         String token = getToken();
@@ -31,7 +35,7 @@ public class MoneySpreadServiceImpl implements MoneySpreadService {
         String token = "";
         do {
             token = TokenGenerator.create(3);
-        } while (spreadRoomRepository.findByToken(token).isEmpty());
+        } while (!spreadRoomRepository.findByToken(token).isEmpty());
         return token;
     }
 }

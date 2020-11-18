@@ -2,6 +2,7 @@ package com.kakao.pay.moneyspread;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.pay.moneyspread.constants.Header;
+import com.kakao.pay.moneyspread.constants.ResponseCode;
 import com.kakao.pay.moneyspread.models.SpreadSeed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,20 +13,16 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static org.hamcrest.Matchers.hasLength;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("컨트롤러 테스트")
-@SpringBootTest
-@AutoConfigureMockMvc
-public class ControllerTest {
-    @Autowired
-    MockMvc mockMvc;
-
+public class MoneySpreadControllerTest extends MoneySpreadTest {
     @Test
     @DisplayName("뿌리기 API 테스트")
     void testSeeding() throws Exception {
@@ -38,7 +35,7 @@ public class ControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        MvcResult result = mockMvc.perform(
+        mockMvc.perform(
                 post("/kakao/pay/spread/seeding")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -48,7 +45,7 @@ public class ControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andReturn();
-        assertEquals(String.format("%d, %s", userId, roomId), result.getResponse().getContentAsString());
+                .andExpect(jsonPath("$.body", hasLength(3)))
+                .andExpect(jsonPath("$.code", is(ResponseCode.SUC_RESPONSE.getCode())));
     }
 }

@@ -1,13 +1,14 @@
 package com.kakao.pay.moneyspread.entities;
 
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@NoArgsConstructor
+@Getter @Setter
+@ToString @EqualsAndHashCode
 @Entity
 public class RecvUser {
     /**
@@ -32,7 +33,7 @@ public class RecvUser {
      */
     @NonNull
     @Column(nullable = false)
-    private int recvMoney;
+    private Integer recvMoney;
 
     /**
      * 사용자가 받은 시간

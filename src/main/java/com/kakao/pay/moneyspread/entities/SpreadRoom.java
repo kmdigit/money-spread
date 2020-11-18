@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@NoArgsConstructor @Builder
+@NoArgsConstructor @AllArgsConstructor @Builder
 @Getter @ToString @EqualsAndHashCode
 @Entity
 public class SpreadRoom {
