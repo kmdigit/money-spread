@@ -26,11 +26,7 @@ public class RetrieveTests extends MoneySpreadTest {
     @DisplayName("정상 조회")
     void successTest() throws Exception {
         // given
-        final SpreadRoom spreadRoom = new SpreadRoom("abc", 1L, "ABC", 10000L, 5);
-        spreadRoom.setCreatedTime(LocalDateTime.now());
-        spreadRoom.addUser(new RecvUser(11L, 300));
-        spreadRoom.addUser(new RecvUser(12L, 400));
-        when(repository.findByToken("abc")).thenReturn(spreadRoom);
+        when(repository.findByToken("abc")).thenReturn(stub());
 
         // when
         ResultActions result = retrieve("abc", 1L, "ABC");
@@ -40,5 +36,33 @@ public class RetrieveTests extends MoneySpreadTest {
                 .andExpect(jsonPath("$.code", is(ResponseCode.SUC_RESPONSE.getCode())))
                 .andExpect(jsonPath("$.msg", is(ResponseCode.SUC_RESPONSE.getMsg())))
                 .andExpect(jsonPath("$.body.diggers.length()", is(2)));
+    }
+
+    @Test
+    @DisplayName("다른 사용자 조회")
+    void userValidTest() throws Exception {
+        // given
+        when(repository.findByToken("abc")).thenReturn(stub());
+
+        // when
+        ResultActions result = retrieve("abc", 2L, "ABC");
+
+        // then
+        result.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code", is(ResponseCode.ERR_VALID.getCode())));
+    }
+
+    @Test
+    @DisplayName("다른 방 조회")
+    void roomNotFoundTest() throws Exception {
+        // given
+        when(repository.findByToken("abc")).thenReturn(stub());
+
+        // when
+        ResultActions result = retrieve("ABC", 1L, "ABC");
+
+        // then
+        result.andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code", is(ResponseCode.ERR_NOTFOUND.getCode())));
     }
 }

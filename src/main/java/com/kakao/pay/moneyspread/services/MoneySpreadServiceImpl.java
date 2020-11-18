@@ -1,18 +1,17 @@
 package com.kakao.pay.moneyspread.services;
 
-import com.kakao.pay.moneyspread.constants.ResponseCode;
 import com.kakao.pay.moneyspread.entities.SpreadRoom;
+import com.kakao.pay.moneyspread.exceptions.RoomNotFoundException;
+import com.kakao.pay.moneyspread.exceptions.UserAccessDeniedException;
 import com.kakao.pay.moneyspread.models.SpreadSeed;
 import com.kakao.pay.moneyspread.repositories.SpreadRoomRepository;
 import com.kakao.pay.moneyspread.utils.TokenGenerator;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -37,14 +36,11 @@ public class MoneySpreadServiceImpl implements MoneySpreadService {
         LocalDateTime expiredDate = LocalDateTime.now().minusDays(7);
 
         if (spreadRoom == null) {
-            // NotFoundException
-            //ResponseCode.ERR_NOTFOUND;
+            throw new RoomNotFoundException();
         } else if (spreadRoom.getUserId() != userId) {
-            // AccessDenied
-//            ResponseCode.ERR_NOTUSER;
+            throw new UserAccessDeniedException();
         } else if (spreadRoom.getCreatedTime().isBefore(expiredDate)) {
-            // AccessDenied
-//            ResponseCode.ERR_EXPIRED;
+            throw new UserAccessDeniedException();
         }
         return spreadRoom;
     }

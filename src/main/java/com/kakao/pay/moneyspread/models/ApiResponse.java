@@ -1,6 +1,5 @@
 package com.kakao.pay.moneyspread.models;
 
-import com.kakao.pay.moneyspread.constants.ResponseCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
