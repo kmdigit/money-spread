@@ -6,7 +6,8 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 @Getter @Setter
 @ToString @EqualsAndHashCode
 @Entity
@@ -14,7 +15,7 @@ public class RecvUser {
     /**
      * 사용자 고유 아이디
      */
-    @Id @NonNull
+    @Id
     @Column(nullable = false) @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 

@@ -5,7 +5,10 @@ import lombok.Getter;
 @Getter
 public enum ResponseCode {
     SUC_RESPONSE("0x00", "응답 성공"),
-    ERR_REQUEST("0x10","요청 파라메터 에러");
+    ERR_NOTUSER("0x41", "사용자 접근 권한 제한"),
+    ERR_EXPIRED("0x42", "시간 초과"),
+    ERR_DUPUSER("0x43", "중복 유저 제한"),
+    ERR_NOTFOUND("0x44", "방 검색 실패");
 
     private final String code;
     private final String msg;

@@ -5,9 +5,11 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor @AllArgsConstructor @Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 @Getter @ToString @EqualsAndHashCode
 @Entity
 public class SpreadRoom {
@@ -51,6 +53,7 @@ public class SpreadRoom {
      * 방 생성 시간
      */
     @CreatedDate
+    @Setter
     private LocalDateTime createdTime;
 
     /**
@@ -58,7 +61,7 @@ public class SpreadRoom {
      */
     @ToString.Exclude
     @OneToMany(mappedBy = "spreadRoom", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<RecvUser> recvUsers;
+    private List<RecvUser> recvUsers = new ArrayList<>();
 
     public void addUser(RecvUser recvUser) {
         recvUsers.add(recvUser);
