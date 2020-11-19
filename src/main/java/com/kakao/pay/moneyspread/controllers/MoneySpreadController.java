@@ -6,7 +6,6 @@ import com.kakao.pay.moneyspread.entities.RecvUser;
 import com.kakao.pay.moneyspread.entities.SpreadRoom;
 import com.kakao.pay.moneyspread.models.ApiRequest;
 import com.kakao.pay.moneyspread.models.ApiResponse;
-import com.kakao.pay.moneyspread.models.SpreadSeed;
 import com.kakao.pay.moneyspread.services.MoneySpreadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -21,7 +20,7 @@ public class MoneySpreadController {
     @PostMapping(value = "/seed", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<String> seed(@RequestHeader(Header.USER_ID) long userId,
                                     @RequestHeader(Header.ROOM_ID) String roomId,
-                                    @RequestBody SpreadSeed spreadSeed) {
+                                    @RequestBody ApiRequest.SpreadSeed spreadSeed) {
         final String token = moneySpreadService.createRoom(roomId, userId, spreadSeed);
         return ApiResponse.<String>builder()
                 .code(ResponseCode.SUC_RESPONSE.getCode())
@@ -31,10 +30,15 @@ public class MoneySpreadController {
     }
 
     @PostMapping("/digup/{token}")
-    public void digUp(@RequestHeader(Header.USER_ID) long userId,
+    public ApiResponse<Long> digUp(@RequestHeader(Header.USER_ID) long userId,
                       @RequestHeader(Header.ROOM_ID) String roomId,
-                      @RequestBody SpreadSeed spreadSeed) {
-
+                      @PathVariable String token) {
+        final long money = moneySpreadService.digUp(token, userId, roomId);
+        return ApiResponse.<Long>builder()
+                .code(ResponseCode.SUC_RESPONSE.getCode())
+                .msg(ResponseCode.SUC_RESPONSE.getMsg())
+                .body(money)
+                .build();
     }
 
     @GetMapping("/retrieve/{token}")

@@ -43,6 +43,13 @@ public class SpreadRoom {
     private Long seedMoney;
 
     /**
+     * 남은 금액
+     */
+    @NonNull @Setter
+    @Column(nullable = false)
+    private Long leftMoney;
+
+    /**
      * 뿌릴 인원
      */
     @NonNull

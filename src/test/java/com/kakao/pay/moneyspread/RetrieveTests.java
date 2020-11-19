@@ -1,16 +1,11 @@
 package com.kakao.pay.moneyspread;
 
-import com.kakao.pay.moneyspread.constants.Header;
 import com.kakao.pay.moneyspread.constants.ResponseCode;
-import com.kakao.pay.moneyspread.entities.RecvUser;
-import com.kakao.pay.moneyspread.entities.SpreadRoom;
 import com.kakao.pay.moneyspread.repositories.SpreadRoomRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;

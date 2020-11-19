@@ -3,30 +3,23 @@ package com.kakao.pay.moneyspread;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.pay.moneyspread.constants.Header;
 import com.kakao.pay.moneyspread.constants.ResponseCode;
-import com.kakao.pay.moneyspread.models.SpreadSeed;
+import com.kakao.pay.moneyspread.models.ApiRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import static org.hamcrest.Matchers.hasLength;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("컨트롤러 테스트")
-public class MoneySpreadControllerTest extends MoneySpreadTest {
+public class SeedTests extends MoneySpreadTest {
     @Test
     @DisplayName("뿌리기 API 테스트")
     void testSeeding() throws Exception {
-        final SpreadSeed spreadSeed = new SpreadSeed();
+        final ApiRequest.SpreadSeed spreadSeed = new ApiRequest.SpreadSeed();
         spreadSeed.setSeedMoney(1000);
         spreadSeed.setUserCount(5);
 
