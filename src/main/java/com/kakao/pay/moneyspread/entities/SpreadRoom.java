@@ -5,9 +5,15 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor @Builder
+/**
+ * 뿌리기 방 정보
+ * 뿌리기 방에는 수집한 사용자가 속해있다.
+ */
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 @Getter @ToString @EqualsAndHashCode
 @Entity
 public class SpreadRoom {
@@ -41,6 +47,13 @@ public class SpreadRoom {
     private Long seedMoney;
 
     /**
+     * 남은 금액
+     */
+    @NonNull @Setter
+    @Column(nullable = false)
+    private Long leftMoney;
+
+    /**
      * 뿌릴 인원
      */
     @NonNull
@@ -51,6 +64,7 @@ public class SpreadRoom {
      * 방 생성 시간
      */
     @CreatedDate
+    @Setter
     private LocalDateTime createdTime;
 
     /**
@@ -58,7 +72,7 @@ public class SpreadRoom {
      */
     @ToString.Exclude
     @OneToMany(mappedBy = "spreadRoom", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<RecvUser> recvUsers;
+    private List<RecvUser> recvUsers = new ArrayList<>();
 
     public void addUser(RecvUser recvUser) {
         recvUsers.add(recvUser);
