@@ -3,7 +3,7 @@ package com.kakao.pay.moneyspread;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakao.pay.moneyspread.constants.Header;
 import com.kakao.pay.moneyspread.constants.ResponseCode;
-import com.kakao.pay.moneyspread.models.ApiRequest;
+import com.kakao.pay.moneyspread.models.ApiDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -19,7 +19,7 @@ public class SeedTests extends MoneySpreadTest {
     @Test
     @DisplayName("뿌리기 API 테스트")
     void testSeeding() throws Exception {
-        final ApiRequest.SpreadSeed spreadSeed = new ApiRequest.SpreadSeed();
+        final ApiDTO.SpreadSeed spreadSeed = new ApiDTO.SpreadSeed();
         spreadSeed.setSeedMoney(1000);
         spreadSeed.setUserCount(5);
 
@@ -29,7 +29,7 @@ public class SeedTests extends MoneySpreadTest {
         ObjectMapper mapper = new ObjectMapper();
 
         mockMvc.perform(
-                post("/kakao/pay/spread/seeding")
+                post("/kakao/pay/spread/seed")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(Header.USER_ID, userId)

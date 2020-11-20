@@ -8,7 +8,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApiRequest {
+/**
+ * 요청 API
+ */
+public class ApiDTO {
     /**
      * 뿌리기 API 요청 RequestBody 클래스
      */
@@ -24,6 +27,9 @@ public class ApiRequest {
         private int userCount;
     }
 
+    /**
+     * 조회 API 응답 클래스
+     */
     @Getter
     public static class SpreadRetrieve {
         private final LocalDateTime createdTime;

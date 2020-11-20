@@ -8,6 +8,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 뿌리기 방 정보
+ * 뿌리기 방에는 수집한 사용자가 속해있다.
+ */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @RequiredArgsConstructor
 @Getter @ToString @EqualsAndHashCode

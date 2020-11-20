@@ -3,7 +3,7 @@ package com.kakao.pay.moneyspread.services;
 import com.kakao.pay.moneyspread.entities.RecvUser;
 import com.kakao.pay.moneyspread.entities.SpreadRoom;
 import com.kakao.pay.moneyspread.exceptions.*;
-import com.kakao.pay.moneyspread.models.ApiRequest;
+import com.kakao.pay.moneyspread.models.ApiDTO;
 import com.kakao.pay.moneyspread.repositories.SpreadRoomRepository;
 import com.kakao.pay.moneyspread.utils.TokenGenerator;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class MoneySpreadServiceImpl implements MoneySpreadService {
 
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED)
     @Override
-    public String createRoom(String roomId, long userId, ApiRequest.SpreadSeed spreadSeed) {
+    public String createRoom(String roomId, long userId, ApiDTO.SpreadSeed spreadSeed) {
         String token = getToken();
         spreadRoomRepository.save(
                 new SpreadRoom(token, userId, roomId, spreadSeed.getSeedMoney(),
